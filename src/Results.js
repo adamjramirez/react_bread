@@ -1,24 +1,24 @@
 import React from "react";
-import Pet from "./Pet";
+import Recipe from "./Recipe";
 
-const Results = ({ pets }) => {
+const Results = ({ recipes }) => {
   return (
     <div className="search">
-      {!pets.length ? (
-        <h1>No Pets Found</h1>
+      {!recipes.length ? (
+        <h1>No Recipes Found</h1>
       ) : (
-        pets.map(pet => {
+        recipes.map(recipe => {
           return (
-            <Pet
-              animal={pet.type}
-              key={pet.id}
-              name={pet.name}
-              breed={pet.breeds.primary}
-              media={pet.photos}
-              location={`${pet.contact.address.city}, ${
-                pet.contact.address.state
+            <Recipe
+              animal={recipe.type}
+              key={recipe.id}
+              name={recipe.name}
+              breed={recipe.breeds.primary}
+              media={recipe.photos}
+              location={`${recipe.contact.address.city}, ${
+                recipe.contact.address.state
               }`}
-              id={pet.id}
+              id={recipe.id}
             />
           );
         })

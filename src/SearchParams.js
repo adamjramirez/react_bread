@@ -1,74 +1,57 @@
 import React, { useState, useEffect, useContext } from "react";
-import pet, { ANIMALS } from "@frontendmasters/pet";
+//import pet, { ANIMALS } from "@frontendmasters/pet";
 import useDropdown from "./useDropdown";
 import Results from "./Results";
 import ThemeContext from "./ThemeContext";
 
 const SearchParams = () => {
   const [theme, setTheme] = useContext(ThemeContext);
-  const [location, updateLocation] = useState("Seattle, WA");
-  const [breeds, updateBreeds] = useState([]);
-  const [pets, setPets] = useState([]);
-  const [animal, AnimalDropdown] = useDropdown("Animal", "dog", ANIMALS);
-  const [breed, BreedDropdown, updateBreed] = useDropdown("Breed", "", breeds);
+  const [duration, updateDuration] = useState("Seattle, WA");
+  const [flours, updateFlours] = useState([]);
+  const [recipes, setRecipes] = useState([]);
+  const [bread, BreadDropdown] = useDropdown("Flour Type", "White (550)", ["White (550)", "Rye"]);
+  const [flour, FlourDropdown, updateFlour] = useDropdown("Flavor", "", ["Light", "Sour"]);
+  const recipe = ["White (550)", "Light", "22"];
 
-  async function requestPets() {
-    const { animals } = await pet.animals({
-      location,
-      breed,
-      type: animal
+  async function requestRecipes() {
+    const { breads } = await recipes.bread({
+      mainFlour,
+      flavor,
+      duration,
+      type: bread
     });
 
-    console.log("animals", animals);
+    console.log("breads", breads);
 
-    setPets(animals || []);
+    setRecipes(breads || []);
   }
 
   useEffect(() => {
-    updateBreeds([]);
-    updateBreed("");
-
-    pet.breeds(animal).then(({ breeds }) => {
-      const breedStrings = breeds.map(({ name }) => name);
-      updateBreeds(breedStrings);
-    }, console.error);
-  }, [animal]);
+    updateFlours([]);
+    updateFlour("");
+  }, [bread]);
 
   return (
     <div className="search-params">
       <form
         onSubmit={e => {
           e.preventDefault();
-          requestPets();
+          requestRecipes();
         }}
       >
-        <label htmlFor="location">
-          Location
+        <label htmlFor="duration">
+          Duration
           <input
-            id="location"
-            value={location}
-            placeholder="Location"
-            onChange={e => updateLocation(e.target.value)}
+            id="duration"
+            value={duration}
+            placeholder="Duration"
+            onChange={e => updateDuration(e.target.value)}
           />
         </label>
-        <AnimalDropdown />
-        <BreedDropdown />
-        <label htmlFor="location">
-          Theme
-          <select
-            value={theme}
-            onChange={e => setTheme(e.target.value)}
-            onBlur={e => setTheme(e.target.value)}
-          >
-            <option value="peru">Peru</option>
-            <option value="darkblue">Dark Blue</option>
-            <option value="chartreuse">Chartreuse</option>
-            <option value="mediumorchid">Medium Orchid</option>
-          </select>
-        </label>
-        <button style={{ backgroundColor: theme }}>Submit</button>
-      </form>
-      <Results pets={pets} />
+        <BreadDropdown />
+        <FlourDropdown />
+        </form>
+      <Results recipes={recipes} />
     </div>
   );
 };

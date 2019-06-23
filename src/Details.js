@@ -1,5 +1,4 @@
 import React from "react";
-import pet from "@frontendmasters/pet";
 import { navigate } from "@reach/router";
 import Carousel from "./Carousel";
 import Modal from "./Modal";

@@ -11,7 +11,7 @@ const App = () => {
     <ThemeContext.Provider value={theme}>
       <div>
         <header>
-          <Link to="/">Adopt Me!</Link>
+          <Link to="/">Adam's Bread Directory</Link>
         </header>
         ;
         <Router>
